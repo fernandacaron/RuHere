@@ -9,7 +9,7 @@ records flagged by each flagging function."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">RuHere</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,6 +26,7 @@ records flagged by each flagging function."><meta property="og:image" content="h
     <li><a class="dropdown-item" href="../articles/flagging_records_species_list.html">4. Flagging Records with Specialists' Information</a></li>
     <li><a class="dropdown-item" href="../articles/sampling_bias.html">5. Reducing sampling bias</a></li>
   </ul></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/wevertonbio/RuHere/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -62,7 +63,8 @@ records flagged by each flagging function.</p>
 <span>  additional_flags <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  names_additional_flags <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  show_no_flagged <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  show_unflagged <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  occ_unflagged <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fill <span class="op">=</span> <span class="st">"#0072B2"</span>,</span>
 <span>  sort <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  decreasing <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -116,9 +118,15 @@ if <code>additional_flags</code> is not NULL.</p></dd>
 number of flagged records. Default is <code>TRUE</code>.</p></dd>
 
 
-<dt id="arg-show-no-flagged">show_no_flagged<a class="anchor" aria-label="anchor" href="#arg-show-no-flagged"></a></dt>
+<dt id="arg-show-unflagged">show_unflagged<a class="anchor" aria-label="anchor" href="#arg-show-unflagged"></a></dt>
 <dd><p>(logical) whether to include the number of unflagged
 records in the plot. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-occ-unflagged">occ_unflagged<a class="anchor" aria-label="anchor" href="#arg-occ-unflagged"></a></dt>
+<dd><p>(data.frame or data.table) an optional dataset
+containing unflagged occurrence records. Only applicable if <code>occ</code> is NULL and
+<code>show_unflagged</code> is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>

@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RuHere</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,7 @@
     <li><a class="dropdown-item" href="../articles/sampling_bias.html">5. Reducing sampling bias</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -451,11 +452,13 @@ separate panel by setting <code>facet_wrap = TRUE</code>:</p>
 <h3 id="get-consensus-across-multiple-flags">Get consensus across multiple flags<a class="anchor" aria-label="anchor" href="#get-consensus-across-multiple-flags"></a>
 </h3>
 <p>We can obtain a consensus across multiple flags. The consensus can be
-computed in two ways: - A record is considered valid (<code>TRUE</code>)
-<strong>only if all specified flags are valid</strong>
-(<code>TRUE</code>). - A record is considered valid (<code>TRUE</code>)
-<strong>if at least one specified flag is valid</strong>
-(<code>TRUE</code>).</p>
+computed in two ways:</p>
+<ul>
+<li>A record is considered valid (<code>TRUE</code>) <strong>only if all
+specified flags are valid</strong> (<code>TRUE</code>).</li>
+<li>A record is considered valid (<code>TRUE</code>) <strong>if at least
+one specified flag is valid</strong> (<code>TRUE</code>).</li>
+</ul>
 <p>As an example, we compute a consensus using the <em>cultivated</em>
 and <em>year</em> flags. In this case, cultivated records are flagged as
 invalid only if they were also collected before 1980. By default, the
@@ -498,11 +501,15 @@ provided for plotting:</p>
 <code><a href="../reference/remove_flagged.html">remove_flagged()</a></code> function to clean the dataset. This
 function is highly flexible, allowing you to filter records based on the
 flags generated and also apply manual overrides using the
-<code>force_keep</code> and <code>force_remove</code> arguments. +
-<code>force_keep</code>: a vector of record IDs that you want to keep in
-the dataset, even if they were flagged as FALSE by one of the functions.
-+ <code>force_remove</code>: a vector of record IDs that you want to
-exclude, even if they passed all automated tests (flagged as TRUE).</p>
+<code>force_keep</code> and <code>force_remove</code> arguments:</p>
+<ul>
+<li><p><code>force_keep</code>: a vector of record IDs that you want to
+keep in the dataset, even if they were flagged as FALSE by one of the
+functions.</p></li>
+<li><p><code>force_remove</code>: a vector of record IDs that you want
+to exclude, even if they passed all automated tests (flagged as
+TRUE).</p></li>
+</ul>
 <p>As an example, suppose that the records <code>"gbif_17175"</code> and
 <code>"gbif_6108"</code> are known, valid herbarium specimens that were
 mistakenly flagged as cultivated, while <code>"gbif_5516"</code> and
@@ -571,14 +578,15 @@ summary as a bar plot:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Data.frame summarizing the number of records per flag</span></span>
 <span><span class="va">flag_summary</span><span class="op">$</span><span class="va">df_summary</span></span>
-<span><span class="co">#&gt;                        Flag    n</span></span>
-<span><span class="co">#&gt; 4            Equal lat-long    3</span></span>
-<span><span class="co">#&gt; 5             Zero lat-long    6</span></span>
-<span><span class="co">#&gt; 8  Biodiversity Institution    6</span></span>
-<span><span class="co">#&gt; 7 Country-Province centroid    7</span></span>
-<span><span class="co">#&gt; 1                Cultivated   14</span></span>
-<span><span class="co">#&gt; 6          Capital centroid   23</span></span>
-<span><span class="co">#&gt; 9                     Valid 4025</span></span></code></pre></div>
+<span><span class="co">#&gt;                         Flag    n</span></span>
+<span><span class="co">#&gt; 6             Equal lat-long    3</span></span>
+<span><span class="co">#&gt; 7              Zero lat-long    6</span></span>
+<span><span class="co">#&gt; 10  Biodiversity Institution    6</span></span>
+<span><span class="co">#&gt; 9  Country-Province centroid    7</span></span>
+<span><span class="co">#&gt; 1                 Cultivated   14</span></span>
+<span><span class="co">#&gt; 8           Capital centroid   23</span></span>
+<span><span class="co">#&gt; 4                Out of year  198</span></span>
+<span><span class="co">#&gt; 11                     Valid 3837</span></span></code></pre></div>
 <p><br></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Bar plot</span></span>
@@ -590,7 +598,7 @@ used in <code><a href="../reference/remove_flagged.html">remove_flagged()</a></c
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Summarize removed records using saved data</span></span>
 <span><span class="va">flag_summary_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_flags.html">summarize_flags</a></span><span class="op">(</span>flagged_dir <span class="op">=</span> <span class="va">path_to_save</span>, </span>
-<span>                                    show_no_flagged <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">#Do not show unflagged records</span></span>
+<span>                                    show_unflagged <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># Do not show unflagged records</span></span>
 <span>                                    fill <span class="op">=</span> <span class="st">"firebrick"</span><span class="op">)</span> <span class="co"># Change color of bars</span></span>
 <span><span class="va">flag_summary_dir</span><span class="op">$</span><span class="va">plot_summary</span></span></code></pre></div>
 <p><img src="flagging_records_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="80%" style="display: block; margin: auto;"><br></p>
@@ -638,18 +646,19 @@ resolution in decimal degrees.</p>
 </h3>
 <p>You can use the <code>field</code> argument to summarize specific
 quality flags. In this example, we create a density map of records
-flagged by year. This helps identify if certain regions have a higher
-prevalence of cultivated specimens.</p>
+flagged because they are cultivated. This helps identify if certain
+regions have a higher prevalence of cultivated specimens.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Converting flag columns to numeric for plotting</span></span>
 <span><span class="co"># We invert the logic so that errors (FALSE) become 1 and clean data (TRUE) become 0</span></span>
-<span><span class="va">occ</span><span class="op">$</span><span class="va">year_flag_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">!</span><span class="va">occ</span><span class="op">$</span><span class="va">year_flag</span><span class="op">)</span></span>
+<span><span class="va">occ</span><span class="op">$</span><span class="va">cultivated_flag_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">!</span><span class="va">occ</span><span class="op">$</span><span class="va">cultivated_flag</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create the grid </span></span>
 <span><span class="va">r_flagged</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/richness_here.html">richness_here</a></span><span class="op">(</span><span class="va">occ</span>, </span>
 <span>                           summary <span class="op">=</span> <span class="st">"records"</span>, </span>
-<span>                           field <span class="op">=</span> <span class="st">"year_flag_num"</span>, </span>
-<span>                           fun <span class="op">=</span> <span class="va">mean</span>,</span>
+<span>                           field <span class="op">=</span> <span class="st">"cultivated_flag_num"</span>, </span>
+<span>                           field_name <span class="op">=</span> <span class="st">"Cultivated records"</span>,</span>
+<span>                           fun <span class="op">=</span> <span class="va">sum</span>,</span>
 <span>                           res <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot with ggrid_here</span></span>
@@ -663,9 +672,6 @@ flags here, you can replace the flag column with any numeric trait
 (e.g., plant height, seed mass) or environmental variable. By changing
 the fun argument to mean or median, you can easily generate maps of
 average trait values across space.</p>
-<p>Additionally, if you provide a vector of multiple column names to the
-<code>field</code> argument, <code><a href="../reference/ggrid_here.html">ggrid_here()</a></code> will
-automatically generate a multi-panel plot.</p>
 <p>In the next vignette, we demonstrate how to use expert-derived
 information from other biodiversity databases, such as the IUCN and the
 World Checklist of Vascular Plants, to identify records that fall

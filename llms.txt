@@ -41,7 +41,8 @@ data preparation and validation:
 The main functions of the package are presented in the figure below:
 
 ![Figure 1. Overview of the RuHere workflow for species occurrence data
-preparation and validation](reference/figures/workflow.png)
+preparation and
+validation](https://github.com/wevertonbio/other_files/blob/e85358481a9109105378175046db25e97bc7190c/figures/RuHere_Workflow.png?raw=true)
 
 Figure 1. Overview of the RuHere workflow for species occurrence data
 preparation and validation
@@ -58,13 +59,15 @@ Note: Internet connection is required to install the package.
 To install the latest release of RuHere use the following line of code:
 
 ``` r
+
 # Installing from CRAN 
-#install.packages("RuHere")  # in progress
+install.packages("RuHere")
 ```
 
 The development version of RuHere can be installed using the code below.
 
 ``` r
+
 # Installing and loading packages
 if(!require(remotes)){
   install.packages("remotes")
@@ -80,6 +83,9 @@ remotes::install_github("wevertonbio/RuHere")
 # Package index
 
 ## All functions
+
+- [`atlantic_amphibians`](https://wevertonbio.github.io/RuHere/reference/atlantic_amphibians.md)
+  : Amphibian communities from the Atlantic Forest
 
 - [`available_datasets()`](https://wevertonbio.github.io/RuHere/reference/available_datasets.md)
   : Check the available distribution datasets for a set of species
@@ -197,6 +203,9 @@ remotes::install_github("wevertonbio/RuHere")
 
 - [`import_gbif()`](https://wevertonbio.github.io/RuHere/reference/import_gbif.md)
   : Import a download requested from GBIF
+
+- [`inventory_completeness()`](https://wevertonbio.github.io/RuHere/reference/inventory_completeness.md)
+  : Estimation of inventory completeness and coverage deficit
 
 - [`iucn_here()`](https://wevertonbio.github.io/RuHere/reference/iucn_here.md)
   : Download species distribution information from IUCN

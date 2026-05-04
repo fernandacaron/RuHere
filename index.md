@@ -41,7 +41,8 @@ data preparation and validation:
 The main functions of the package are presented in the figure below:
 
 ![Figure 1. Overview of the RuHere workflow for species occurrence data
-preparation and validation](reference/figures/workflow.png)
+preparation and
+validation](https://github.com/wevertonbio/other_files/blob/e85358481a9109105378175046db25e97bc7190c/figures/RuHere_Workflow.png?raw=true)
 
 Figure 1. Overview of the RuHere workflow for species occurrence data
 preparation and validation
@@ -58,13 +59,15 @@ Note: Internet connection is required to install the package.
 To install the latest release of RuHere use the following line of code:
 
 ``` r
+
 # Installing from CRAN 
-#install.packages("RuHere")  # in progress
+install.packages("RuHere")
 ```
 
 The development version of RuHere can be installed using the code below.
 
 ``` r
+
 # Installing and loading packages
 if(!require(remotes)){
   install.packages("remotes")

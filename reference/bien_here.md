@@ -73,6 +73,7 @@ and their synonyms in the second. See `RuHere::synonys` for an example.
 ## Examples
 
 ``` r
+# \donttest{
 # Define a directory to save the data
 data_dir <- tempdir() # Here, a temporary directory
 
@@ -81,4 +82,5 @@ bien_here(data_dir = data_dir, species = "Handroanthus serratifolius")
 #>                       species range_available
 #>                        <char>          <lgcl>
 #> 1: Handroanthus serratifolius            TRUE
+# }
 ```

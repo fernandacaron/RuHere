@@ -72,6 +72,7 @@ species: the Paraná pine (*Araucaria angustifolia*), the azure jay
 albus*).
 
 ``` r
+
 # Load RuHere
 library(RuHere)
 # Loading the example data
@@ -95,6 +96,7 @@ which is useful if you want to inspect the records that were removed. We
 then update our working dataset (`occ`) to keep only the valid records.
 
 ``` r
+
 # Remove invalid coordinates and store the result as a list to separate valid/invalid data
 occ_split <- remove_invalid_coordinates(
   occ = occurrences,
@@ -136,6 +138,7 @@ function scans the metadata for terms indicating that a record
 corresponds to a fossil.
 
 ``` r
+
 occ <- flag_fossil(occ) # Scan for fossil-related terms
 # Number of records flagged as fossil
 sum(!occ$fossil_flag) # No records flagged as fossil
@@ -154,6 +157,7 @@ corresponds to a cultivated individual. This function is heavily
 inspired by the `getCult()` function from the `plantR` package:
 
 ``` r
+
 occ <- flag_cultivated(occ) # Scan for fossil-related terms
 # Number of records flagged as fossil
 sum(!occ$cultivated_flag)
@@ -175,6 +179,7 @@ function allows you to flag all iNaturalist records or only those that
 are not classified as Research Grade:
 
 ``` r
+
 # Flag all iNaturalist records (including Research Grade)
 occ_inat <- flag_inaturalist(occ, 
                              research_grade = TRUE) #Flag even when is research-grade
@@ -200,6 +205,7 @@ longer be suitable for the species. As an example, we flag records
 collected before 1980:
 
 ``` r
+
 occ <- flag_year(occ, lower_limit = 1980, 
                  upper_limit = NULL) #We could specify a upper limit as well
 sum(!occ$year_flag) #Number of flagged records
@@ -219,6 +225,7 @@ duplicated records. But to ilustrate the function, let’s create a new
 dataset with the records duplicates:
 
 ``` r
+
 # Duplicated records
 new_occ <- rbind(occurrences[1:1000, ], occurrences[1:100,])
 ```
@@ -234,6 +241,7 @@ RuHere provides several options to deal with duplicates:
   prioritize records from a specific data_source:
 
 ``` r
+
 # Flag records and keep the most recent and preferably from GBIF:
 # Create vector to prioritize gbif records
 preferable_datasource <- c("gbif", "specieslink", "idigbio")
@@ -253,6 +261,7 @@ sum(!occ_dup1$duplicated_flag) #Number of flagged records
   considered duplicates:
 
 ``` r
+
 # Flag duplicates based on coordinates and year
 occ_dup2 <- flag_duplicates(occ = new_occ, additional_groups = "year")
 ```
@@ -264,6 +273,7 @@ occ_dup2 <- flag_duplicates(occ = new_occ, additional_groups = "year")
   in the same cell.
 
 ``` r
+
 # Import raster
 data("worldclim", package = "RuHere")
 wc <- terra::unwrap(worldclim) #Unpack raster
@@ -309,6 +319,7 @@ simply need to use the
 function:
 
 ``` r
+
 # Install the package if necessary
 # if(!require("CoordinateCleaner")){
 #   install.packages("CoordinateCleaner")
@@ -344,6 +355,7 @@ whether a record passed all applied tests, and can be ignored for the
 purposes of this vignette.
 
 ``` r
+
 head(occ[,19:25])
 #>   .val .equ .zer .cap .cen .inst .summary
 #> 1 TRUE TRUE TRUE TRUE TRUE  TRUE     TRUE
@@ -374,6 +386,7 @@ which uses `ggplot2`. Let’s see the flagged record of the Paraná Pine:
 > is a static snapshot of the interactive map produced in RStudio.
 
 ``` r
+
 # Interactive map with map_here()
 map_here(occ, species = "Araucaria angustifolia", label = "record_id", cex = 4)
 ```
@@ -381,6 +394,7 @@ map_here(occ, species = "Araucaria angustifolia", label = "record_id", cex = 4)
 ![](vignettes_img/IMG02.jpeg)  
 
 ``` r
+
 # Static map with ggplot
 ggmap_here(occ, species = "Araucaria angustifolia", 
            show_no_flagged = FALSE) # Do not show unflagged records
@@ -394,6 +408,7 @@ we can also plot each flag in a separate panel by setting
 `facet_wrap = TRUE`:
 
 ``` r
+
 ggmap_here(occ, species = "Araucaria angustifolia", 
            facet_wrap = TRUE)
 ```
@@ -403,9 +418,12 @@ ggmap_here(occ, species = "Araucaria angustifolia",
 ### Get consensus across multiple flags
 
 We can obtain a consensus across multiple flags. The consensus can be
-computed in two ways: - A record is considered valid (`TRUE`) **only if
-all specified flags are valid** (`TRUE`). - A record is considered valid
-(`TRUE`) **if at least one specified flag is valid** (`TRUE`).
+computed in two ways:
+
+- A record is considered valid (`TRUE`) **only if all specified flags
+  are valid** (`TRUE`).
+- A record is considered valid (`TRUE`) **if at least one specified flag
+  is valid** (`TRUE`).
 
 As an example, we compute a consensus using the *cultivated* and *year*
 flags. In this case, cultivated records are flagged as invalid only if
@@ -414,6 +432,7 @@ new column named `"consensus_flag"`, but a custom name can be provided.
 Here, we name the new flag as `"old_cultivated"`.
 
 ``` r
+
 occ_consensus <- flag_consensus(occ, 
                                 flags = c("cultivated", "year"),
                                 consensus_rule = "any_true",
@@ -440,6 +459,7 @@ Because it is a user-defined flag, it must be specified via the
 must also be provided for plotting:
 
 ``` r
+
 ggmap_here(occ_consensus, 
            flags = c("year", "cultivated"),            # Specific flags to show
            additional_flags = "old_cultivated",        # Column name of the custom flag
@@ -457,10 +477,13 @@ After flagging potential issues, we can use the
 function to clean the dataset. This function is highly flexible,
 allowing you to filter records based on the flags generated and also
 apply manual overrides using the `force_keep` and `force_remove`
-arguments. + `force_keep`: a vector of record IDs that you want to keep
-in the dataset, even if they were flagged as FALSE by one of the
-functions. + `force_remove`: a vector of record IDs that you want to
-exclude, even if they passed all automated tests (flagged as TRUE).
+arguments:
+
+- `force_keep`: a vector of record IDs that you want to keep in the
+  dataset, even if they were flagged as FALSE by one of the functions.
+
+- `force_remove`: a vector of record IDs that you want to exclude, even
+  if they passed all automated tests (flagged as TRUE).
 
 As an example, suppose that the records `"gbif_17175"` and `"gbif_6108"`
 are known, valid herbarium specimens that were mistakenly flagged as
@@ -472,6 +495,7 @@ this example, we use a temporary directory, but in practice you should
 define a permanent location:
 
 ``` r
+
 # Create directory to save removed records
 path_to_save <- file.path(tempdir(), "removed_records")
 dir.create(path_to_save)
@@ -507,6 +531,7 @@ GZIP format, which is a compressed format that can be read using
 data.table::fread().
 
 ``` r
+
 fs::dir_tree(path_to_save)
 #> Temp/removed_records
 #> ├── Biodiversity Institution.gz
@@ -527,6 +552,7 @@ After flagging the records, we can create a bar plot summarizing the
 number of records flagged by each flagging function:
 
 ``` r
+
 flag_summary <- summarize_flags(occ)
 ```
 
@@ -536,21 +562,24 @@ The function returns a `data.frame` summarizing the number of records
 per flag and a `ggplot2` object displaying this summary as a bar plot:
 
 ``` r
+
 # Data.frame summarizing the number of records per flag
 flag_summary$df_summary
-#>                        Flag    n
-#> 4            Equal lat-long    3
-#> 5             Zero lat-long    6
-#> 8  Biodiversity Institution    6
-#> 7 Country-Province centroid    7
-#> 1                Cultivated   14
-#> 6          Capital centroid   23
-#> 9                     Valid 4025
+#>                         Flag    n
+#> 6             Equal lat-long    3
+#> 7              Zero lat-long    6
+#> 10  Biodiversity Institution    6
+#> 9  Country-Province centroid    7
+#> 1                 Cultivated   14
+#> 8           Capital centroid   23
+#> 4                Out of year  198
+#> 11                     Valid 3837
 ```
 
   
 
 ``` r
+
 # Bar plot
 flag_summary$plot_summary
 ```
@@ -563,9 +592,10 @@ in
 [`remove_flagged()`](https://wevertonbio.github.io/RuHere/reference/remove_flagged.md):
 
 ``` r
+
 # Summarize removed records using saved data
 flag_summary_dir <- summarize_flags(flagged_dir = path_to_save, 
-                                    show_no_flagged = FALSE, #Do not show unflagged records
+                                    show_unflagged = FALSE, # Do not show unflagged records
                                     fill = "firebrick") # Change color of bars
 flag_summary_dir$plot_summary
 ```
@@ -576,6 +606,7 @@ Since the output is a `ggplot2` object, it can be saved using
 [`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html):
 
 ``` r
+
 ggplot2::ggsave(filename = file.path(path_to_save, "Summary.png"), 
                 plot = flag_summary_dir$plot_summary, width = 8, height = 5, 
                 dpi = 600)
@@ -600,6 +631,7 @@ of the grid is controlled by the `res` argument, which defines the
 spatial resolution in decimal degrees.
 
 ``` r
+
 # Create a grid of species richness
 r_richness <- richness_here(occ, summary = "species", res = 2)
 
@@ -614,6 +646,7 @@ ggrid_here(r_richness)
 
 ``` r
 
+
 ggrid_here(r_records)
 ```
 
@@ -622,20 +655,22 @@ ggrid_here(r_records)
 ### Mapping data quality flags
 
 You can use the `field` argument to summarize specific quality flags. In
-this example, we create a density map of records flagged by year. This
-helps identify if certain regions have a higher prevalence of cultivated
-specimens.
+this example, we create a density map of records flagged because they
+are cultivated. This helps identify if certain regions have a higher
+prevalence of cultivated specimens.
 
 ``` r
+
 # Converting flag columns to numeric for plotting
 # We invert the logic so that errors (FALSE) become 1 and clean data (TRUE) become 0
-occ$year_flag_num <- as.numeric(!occ$year_flag)
+occ$cultivated_flag_num <- as.numeric(!occ$cultivated_flag)
 
 # Create the grid 
 r_flagged <- richness_here(occ, 
                            summary = "records", 
-                           field = "year_flag_num", 
-                           fun = mean,
+                           field = "cultivated_flag_num", 
+                           field_name = "Cultivated records",
+                           fun = sum,
                            res = 2)
 
 # Plot with ggrid_here
@@ -652,11 +687,6 @@ can replace the flag column with any numeric trait (e.g., plant height,
 seed mass) or environmental variable. By changing the fun argument to
 mean or median, you can easily generate maps of average trait values
 across space.
-
-Additionally, if you provide a vector of multiple column names to the
-`field` argument,
-[`ggrid_here()`](https://wevertonbio.github.io/RuHere/reference/ggrid_here.md)
-will automatically generate a multi-panel plot.
 
 In the next vignette, we demonstrate how to use expert-derived
 information from other biodiversity databases, such as the IUCN and the

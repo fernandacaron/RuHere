@@ -63,11 +63,22 @@ directory specified by `data_dir`.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+# \donttest{
 # Define a directory to save the data
 data_dir <- tempdir() # Here, a temporary directory
 
 # Download the latest version of the Flora e Funga do Brazil database
 faunabr_here(data_dir = data_dir)
-} # }
+#> Getting data from Taxonomic Catalog of the Brazilian Fauna ...
+#> Data will be saved in /tmp/Rtmp90xvNO/faunabr
+#> Downloading version: 1.50
+#> Merging data. Please wait a moment...
+#> Data will be saved in /tmp/Rtmp90xvNO/faunabr
+#> Data downloaded and merged successfully. Final data saved in/tmp/Rtmp90xvNO/faunabr/1.50/CompleteBrazilianFauna.gz
+#> Data sucessfuly saved in /tmp/Rtmp90xvNO/faunabr
+#> 
+#> Please don't forget to cite:
+#> 
+#> Trindade WCF (2025) faunabr: An R package to explore taxonomic data and map species distributions using the Catalogo Taxonomico da Fauna do Brasil. Zoologia 42: e25027. <https://doi.org/10.1590/S1984-4689.v42.e25027>.
+# }
 ```
