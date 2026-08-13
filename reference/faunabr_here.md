@@ -2,7 +2,7 @@
 
 This function downloads the Taxonomic Catalog of the Brazilian Fauna
 database, which is required for filtering occurrence records using
-specialists' information via the
+specialists' range information via the
 [`flag_faunabr()`](https://wevertonbio.github.io/RuHere/reference/flag_faunabr.md)
 function.
 
@@ -70,10 +70,10 @@ data_dir <- tempdir() # Here, a temporary directory
 # Download the latest version of the Flora e Funga do Brazil database
 faunabr_here(data_dir = data_dir)
 #> Getting data from Taxonomic Catalog of the Brazilian Fauna ...
-#> Data will be saved in /tmp/RtmpTTnULq/faunabr
+#> Data will be saved in /tmp/Rtmp9f3QCX/faunabr
 #> Downloading version: 1.54
 #> Merging data. Please wait a moment...
-#> Data will be saved in /tmp/RtmpTTnULq/faunabr
+#> Data will be saved in /tmp/Rtmp9f3QCX/faunabr
 #> Reading files...
 #> Aggregating secondary tables...
 #> Performing table joins (merges)...
